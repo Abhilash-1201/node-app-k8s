@@ -31,6 +31,7 @@ pipeline {
         stage('Docker Deploy k8s'){
             steps{
                 sshagent(['k8s']) {
+                    sshagent (credentials: ['k8s'])
                     sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@3.101.105.176:/home/ubuntu/"
                     script {
                     try {
