@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment{
+        dockerImage = ''
         registry = 'abhilashnarayan/nodeapp'
         registryCredential = 'dockerhub-id'
         DOCKER_TAG = getDockerTag()    
