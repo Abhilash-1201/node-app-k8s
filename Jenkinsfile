@@ -34,8 +34,10 @@ pipeline {
                     sh "scp -o StrictHostKeyChecking=no services.yml ubuntu@3.101.105.176:/home/ubuntu/"
                     script {
                     try {
+                        sh "echo sudo su"
                         sh "ssh ubuntu@3.101.105.176 kubectl apply -f ."
                     }catch(error){
+                        sh "echo sudo su"
                         sh "ssh ubuntu@3.101.105.176 kubectl create -f ."
                     }
                 }
