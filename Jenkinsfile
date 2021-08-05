@@ -31,14 +31,14 @@ pipeline {
         stage('Docker Deploy k8s'){
             steps{
                 sshagent(['k8s']) {
-                    sh "scp -o StrictHostKeyChecking=no services.yml ubuntu@3.101.105.176:/home/ubuntu/"
+                    sh "scp -o StrictHostKeyChecking=no services.yml ubuntu@54.219.37.205:/home/ubuntu/"
                     script {
                     try {
                         sh "echo sudo su"
-                        sh "ssh ubuntu@3.101.105.176 kubectl apply -f ."
+                        sh "ssh ubuntu@54.219.37.205 kubectl apply -f ."
                     }catch(error){
                         sh "echo sudo su"
-                        sh "ssh ubuntu@3.101.105.176 kubectl create -f ."
+                        sh "ssh ubuntu@54.219.37.205 kubectl create -f ."
                     }
                 }
                     
