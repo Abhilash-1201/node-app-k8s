@@ -26,7 +26,7 @@ pipeline {
                 sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['K8S']) {
                  // some block
-                    sh "scp -o StrictHostKeyChecking=no services.yml pods.yml ubuntu@18.144.161.205:/home/ubuntu/"
+                    sh "scp -o StrictHostKeyChecking=no services.yml javawebapp-pod.yml ubuntu@18.144.161.205:/home/ubuntu/"
                     script{
                         try{
                             sh "ssh ubuntu@18.144.161.205 kubectl apply -f ."
