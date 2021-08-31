@@ -6,7 +6,7 @@ metadata:
     app: javaapp
 spec:
   containers:
-    - name: nodeapp
+    - name: javaapp
       image: abhilashnarayan/javaapp:tagVersion
       ports:
         - containerPort: 8081
