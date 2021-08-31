@@ -12,8 +12,8 @@ pipeline {
 
         stage ('Docker Image Push') {
             steps {
-                withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-                    sh "docker login -u abhilashnarayan -p ${dockerHubPwd}"
+                withCredentials([string(credentialsId: 'dockerhub-id', variable: 'dockerhubpwd')]) {
+                    sh "docker login -u abhilashnarayan -p ${dockerhubpwd}"
                     sh "docker push abhilashnarayan/javaapp:${DOCKER_TAG}"
                 }
                 
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh "chmod +x changeTag.sh"
                 sh "./changeTag.sh ${DOCKER_TAG}"
-                sshagent(['kops-machine']) {
+                sshagent(['K8S']) {
                  // some block
                     sh "scp -o StrictHostKeyChecking=no services.yml java-app-pod.yml ubuntu@18.144.161.205:/home/ubuntu/"
                     script{
