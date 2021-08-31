@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage("Build Dokcer Image") {
             steps {
-                sh "docker build . -t abhilashnarayan/nodeapp:${DOCKER_TAG}"
+                sh "docker build . -t abhilashnarayan/javaapp:${DOCKER_TAG}"
             }
         }
 
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
                     sh "docker login -u abhilashnarayan -p ${dockerHubPwd}"
-                    sh "docker push abhilashnarayan/nodeapp:${DOCKER_TAG}"
+                    sh "docker push abhilashnarayan/javaapp:${DOCKER_TAG}"
                 }
                 
             }
@@ -26,12 +26,12 @@ pipeline {
                 sh "./changeTag.sh ${DOCKER_TAG}"
                 sshagent(['kops-machine']) {
                  // some block
-                    sh "scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@184.169.230.218:/home/ubuntu/"
+                    sh "scp -o StrictHostKeyChecking=no services.yml java-app-pod.yml ubuntu@18.144.161.205:/home/ubuntu/"
                     script{
                         try{
-                            sh "ssh ubuntu@184.169.230.218 kubectl apply -f ."
+                            sh "ssh ubuntu@18.144.161.205 kubectl apply -f ."
                         }catch(error){
-                            sh "ssh ubuntu@184.169.230.218 kubectl create -f ."
+                            sh "ssh ubuntu@18.144.161.205 kubectl create -f ."
                         }
                     }
             }
